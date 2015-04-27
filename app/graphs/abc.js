@@ -3,9 +3,9 @@
 
   define(["d3"], function(d3) {
     'use strict';
-    var price;
-    price = function() {
-      var X, Y, area, graph, height, line, margin, width, xAxis, xScale, xValue, yScale, yValue;
+    var frequency;
+    frequency = function() {
+      var X, Y, area, graph, height, line, margin, width, xAxis, xScale, xValue, yAxis, yScale, yValue;
       margin = {
         top: 20,
         right: 20,
@@ -13,20 +13,7 @@
         left: 20
       };
       width = 720;
-      height = 80;
-      width = 760;
       height = 120;
-      xValue = function(d) {
-        return d[0];
-      };
-      yValue = function(d) {
-        return d[1];
-      };
-      xScale = d3.time.scale();
-      yScale = d3.scale.linear();
-      xAxis = d3.svg.axis().scale(xScale).orient("bottom").tickSize(6, 0);
-      area = d3.svg.area().x(X).y1(Y);
-      line = d3.svg.line().x(X).y(Y);
       graph = function(selection) {
         return selection.each(function(data) {
           var g, gEnter, svg;
@@ -53,6 +40,18 @@
           return g.select(".x.axis").attr("transform", "translate(0," + yScale.range()[0] + ")").call(xAxis);
         });
       };
+      xScale = d3.scale.original().rangeRoundBands([0, width], .1);
+      yScale = d3.scale.linear().range([height, 0]);
+      xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+      yAxis = d3.svg.acis().scale(yScale).orient('left').ticks(10, "%");
+      xValue = function(d) {
+        return d[0];
+      };
+      yValue = function(d) {
+        return d[1];
+      };
+      area = d3.svg.area().x(X).y1(Y);
+      line = d3.svg.line().x(X).y(Y);
       X = function(d) {
         return xScale(d[0]);
       };

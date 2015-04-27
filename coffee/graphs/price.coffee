@@ -15,7 +15,7 @@ define ["d3"], (d3) ->
 		line = d3.svg.line().x(X).y(Y)
 		
 		graph = (selection) ->
-			selection.each( (data) ->
+			selection.each (data) ->
 				data = data.map((d,i) -> [xValue.call(data, d, i), yValue.call(data, d, i)])
 				xScale
 					.domain(d3.extent(data, (d) -> d[0]))
@@ -53,10 +53,25 @@ define ["d3"], (d3) ->
 				g.select(".x.axis")
 				.attr("transform", "translate(0," + yScale.range()[0] + ")")
 				.call(xAxis);
-			)
+			
 
 		X = (d) -> xScale(d[0])
 		Y = (d) -> yScale(d[1])
+
+		graph.margin = (val) ->
+			if (!arguments.length) then return margin
+			margin = val
+			return graph
+
+		graph.width = (val) ->
+			if (!arguments.length) then return width
+			width = val
+			return graph
+
+		graph.height = (val) ->
+			if (!arguments.length) then return height
+			height = val
+			return graph
 
 		graph.x = (val) ->
 			if (!arguments.length) then return xValue
