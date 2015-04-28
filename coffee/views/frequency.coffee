@@ -4,14 +4,25 @@ define ['backbone', 'graphs/frequency','text!templates/frequency.tpl', 'd3'], (B
 		className: 'section'
 		id: 'visualization'
 		template: _.template(tpl)
-		initialze: () -> 
-			@graph = frequencyGraph().width(200).height(200)
-			@data = @options.data || [];
+		initialize: (options) ->
+			@data = options.data || []
+			@data = [ 
+				{name: "A", frequency: .08167},
+				{name: "B", frequency: .01492},
+				{name: "C", frequency: .02780},
+				{name: "D", frequency: .04253},
+				{name: "E", frequency: .12702}
+			]
+			@graph = frequencyGraph().width(800).height(800).data(@data)
+		return this
 		render: () ->
 			@$el.html(@template)
+			return this
+		renderGraph: () ->
 			@g = d3.select("#graph")
 				.append("svg")
 				.append("g")
 				.attr("transform", "translate(0, 0)")
-				.data(@data).call(@graph);
+				.data(@data)
+				.call(@graph)
 			return this

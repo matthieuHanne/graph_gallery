@@ -7,12 +7,12 @@ define ['backbone'], (Backbone) ->
         initialize: () ->
             this.$el.append $('<div>').attr('id', 'sidebar'), $('<div>').attr('id', 'container')
             $(document.getElementsByTagName('body')).append(this.$el)
-            return this;
+            return this
 
         render: (el, target, option) ->
             #TODO: dig instanceof vs Class.constructor.name
             if el instanceof Backbone.View
-                el = el.$el;
+                el = el.$el
 
             target = this.$el.find(target) ? this.$el;
 

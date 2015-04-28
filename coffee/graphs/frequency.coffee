@@ -1,9 +1,9 @@
 define ["d3"], (d3) ->
 	'use strict'
 
-	graph = ()->
-
+	graph = () ->
 		margin = {top: 20, right: 20, bottom: 30, left: 40}
+		data = [""]
 		width = 960 - margin.left - margin.right
 		height = 500 - margin.top - margin.bottom
 		x = d3.scale.ordinal()
@@ -23,10 +23,21 @@ define ["d3"], (d3) ->
 				.data((d) -> d)
 				.enter().append("rect")
 				.attr("class"," bar")
-				.attr("x", (d) -> x(d.letter))
+				.attr("x", (d) -> x(d.name))
 				.attr("y", (d) -> y(d.frequency))
 				.attr("width", x.rangeBand())
 				.attr("height", (d) -> height - y(d.frequency))
+
+			
+			x = x.domain(data.map((d) -> d.name))
+			y = y.domain([0, d3.max(data, (d) -> d.frequency)])
+		
+			#selection.selectAll("circle")
+			#	.data([32, 57, 112, 293])
+			#	.enter().append("circle")
+			#	.attr("cy", 60)
+			#	.attr("cx", (d, i) -> i * 100 + 30)
+			#	.attr("r", (d) -> Math.sqrt(d))
 
 			selection.append("g")
 				.attr("class", "x axis")
@@ -54,6 +65,12 @@ define ["d3"], (d3) ->
 			if (!arguments.length) then return height
 			height = value
 			return graph
+	
+		graph.data = (value) ->
+			if (!arguments.length) then return data
+			data = value
+			return graph
+	
 
 		return graph
 	return graph
