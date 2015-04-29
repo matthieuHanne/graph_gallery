@@ -7,13 +7,35 @@
       className: 'section',
       id: 'visualization',
       template: _.template(tpl),
-      initialze: function() {
-        this.graph = frequencyGraph().width(200).height(200);
-        return this.data = this.options.data || [];
+      initialize: function(options) {
+        this.data = options.data || [];
+        this.data = [
+          {
+            name: "A",
+            frequency: .08167
+          }, {
+            name: "B",
+            frequency: .01492
+          }, {
+            name: "C",
+            frequency: .02780
+          }, {
+            name: "D",
+            frequency: .04253
+          }, {
+            name: "E",
+            frequency: .12702
+          }
+        ];
+        this.graph = frequencyGraph().width(900).height(500).data(this.data);
+        return this;
       },
       render: function() {
         this.$el.html(this.template);
-        this.g = d3.select("#graph").append("svg").append("g").attr("transform", "translate(0, 0)").data(this.data).call(this.graph);
+        return this;
+      },
+      renderGraph: function() {
+        this.g = d3.select("#graph").data(this.data).call(this.graph);
         return this;
       }
     });
