@@ -13,7 +13,7 @@ define ['backbone', 'graphs/frequency','text!templates/frequency.tpl', 'd3'], (B
 				{name: "D", frequency: .04253},
 				{name: "E", frequency: .12702}
 			]
-			@graph = frequencyGraph().width(900).height(500).data(@data)
+			@graph = frequencyGraph().width(900).height(100).data(@data)
 			return this
 		render: () ->
 			@$el.html(@template)
